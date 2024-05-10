@@ -4,6 +4,12 @@
     -fx-background-repeat: no-repeat;
 }
 
+#superiorGrid {
+    -fx-background-image: url('img/agua.jpg');
+    -fx-background-size: 5.0%;
+    -fx-background-repeat: repeat;
+}
+
 .button {
     -fx-background-color: transparent;
 }
@@ -13,6 +19,14 @@
 }
 
 .toggle-button:selected {
-    -fx-background-color: rgba(0, 255, 0, 0.5);
-    -fx-background-radius: 35;
+    -fx-background-color: rgba(0.0, 255.0, 0.0, 0.5);
+    -fx-background-radius: 35.0;
+}
+
+.lineado.label .text {
+    -fx-stroke: white;
+    -fx-stroke-width: 4.0px;
+    -fx-stroke-type: outside;
+    -fx-stroke-line-cap: round;
+    -fx-stroke-line-join: round;
 }

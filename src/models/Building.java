@@ -1,16 +1,27 @@
 package models;
 
-public class Building {
+import java.io.Serializable;
+
+public class Building implements Serializable {
   
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
   private String image;
   private boolean desplegado;
   private Pokemon trabajador;
+  private Pokemon viviendo;
   private String clase;
+  int col;
+  int row;
 
   public Building(String image, String clase) {
     this.image = image;
     this.clase = clase;
     this.desplegado = false;
+    this.col = -1;
+    this.row = -1;
   }
 
   public String getImage() {
@@ -43,6 +54,30 @@ public class Building {
 
   public void setClase(String clase) {
     this.clase = clase;
+  }
+
+  public Pokemon getViviendo() {
+    return viviendo;
+  }
+
+  public void setViviendo(Pokemon viviendo) {
+    this.viviendo = viviendo;
+  }
+
+  public int getCol() {
+    return col;
+  }
+
+  public void setCol(int col) {
+    this.col = col;
+  }
+
+  public int getRow() {
+    return row;
+  }
+
+  public void setRow(int row) {
+    this.row = row;
   }
 
 }

@@ -6,3 +6,4 @@ module SuperAutoMons {
 
   opens application to javafx.graphics, javafx.fxml;
 }
+
