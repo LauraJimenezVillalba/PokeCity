@@ -44,10 +44,15 @@ public class Main extends Application {
   public void stop() {
     MainController controller = loader.getController();
     Partida partida = controller.getPartida();
-    try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(savefile))) {
-      oos.writeObject(partida);
-    } catch (IOException e) {
-      e.printStackTrace();
+    if (partida.getPendiente() > 0) {
+      partida.setNewDecision(true);
+    }
+    if (!partida.isProximoReset()) {
+      try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(savefile))) {
+        oos.writeObject(partida);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
     }
   }
 

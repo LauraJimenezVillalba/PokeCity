@@ -14,6 +14,8 @@ public class Pokemon implements Serializable {
   private String dislike;
   private boolean trabaja;
   private boolean casa;
+  private int amistad;
+  private double xp;
 
   public Pokemon(String nombre, String image, String like, String dislike) {
     this.nombre = nombre;
@@ -22,6 +24,8 @@ public class Pokemon implements Serializable {
     this.dislike = dislike;
     this.trabaja = false;
     this.casa = false;
+    this.amistad = 0;
+    this.xp = 0;
   }
 
   public String getLike() {
@@ -70,6 +74,22 @@ public class Pokemon implements Serializable {
 
   public void setNombre(String nombre) {
     this.nombre = nombre;
+  }
+
+  public int getAmistad() {
+    return amistad;
+  }
+
+  public void setAmistad(int amistad) {
+    this.amistad = amistad;
+  }
+
+  public double getXp() {
+    return xp;
+  }
+
+  public void setXp(double xp) {
+    this.xp = xp;
   }
 
 }

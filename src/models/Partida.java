@@ -19,6 +19,13 @@ public class Partida implements Serializable {
   private boolean intercalado;
   private boolean newDecision;
   private boolean empezado;
+  private boolean proximoReset;
+  private int regalosCombate;
+  private int regalosMedicina;
+  private int regalosServicios;
+  private int regalosEspectaculos;
+  private int regalosComida;
+  private int regalosVentas;
   
   public Partida(ArrayList<Pokemon> pokemones, ArrayList<Building> buildings,
       int day, int pendiente, int dinero,
@@ -32,6 +39,13 @@ public class Partida implements Serializable {
     this.newDecision = newDecision;
     this.hora = hora;
     this.empezado = false;
+    this.proximoReset = false;
+    this.regalosCombate = 0;
+    this.regalosMedicina = 0;
+    this.regalosServicios = 0;
+    this.regalosEspectaculos = 0;
+    this.regalosComida = 0;
+    this.regalosVentas = 0;
   }
 
   public ArrayList<Pokemon> getPokemones() {
@@ -112,6 +126,62 @@ public class Partida implements Serializable {
 
   public void setEmpezado(boolean empezado) {
     this.empezado = empezado;
+  }
+
+  public boolean isProximoReset() {
+    return proximoReset;
+  }
+
+  public void setProximoReset(boolean proximoReset) {
+    this.proximoReset = proximoReset;
+  }
+
+  public int getRegalosCombate() {
+    return regalosCombate;
+  }
+
+  public void setRegalosCombate(int regalosCombate) {
+    this.regalosCombate = regalosCombate;
+  }
+
+  public int getRegalosMedicina() {
+    return regalosMedicina;
+  }
+
+  public void setRegalosMedicina(int regalosMedicina) {
+    this.regalosMedicina = regalosMedicina;
+  }
+
+  public int getRegalosServicios() {
+    return regalosServicios;
+  }
+
+  public void setRegalosServicios(int regalosServicios) {
+    this.regalosServicios = regalosServicios;
+  }
+
+  public int getRegalosEspectaculos() {
+    return regalosEspectaculos;
+  }
+
+  public void setRegalosEspectaculos(int regalosEspectaculos) {
+    this.regalosEspectaculos = regalosEspectaculos;
+  }
+
+  public int getRegalosComida() {
+    return regalosComida;
+  }
+
+  public void setRegalosComida(int regalosComida) {
+    this.regalosComida = regalosComida;
+  }
+
+  public int getRegalosVentas() {
+    return regalosVentas;
+  }
+
+  public void setRegalosVentas(int regalosVentas) {
+    this.regalosVentas = regalosVentas;
   }
 
 }

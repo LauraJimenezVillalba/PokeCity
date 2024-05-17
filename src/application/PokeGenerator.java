@@ -1,6 +1,12 @@
 package application;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,6 +28,7 @@ public class PokeGenerator {
     strings.add("Medicina");
     strings.add("Servicios");
     strings.add("Ventas");
+    strings.add("Espectáculos");
 
     Collections.shuffle(strings);
     String[] selectedStrings = new String[2];
@@ -58,39 +65,50 @@ public class PokeGenerator {
 
   public static String name() {
     List<String> strings = new ArrayList<>();
-
-    // hacer que lo tome de archivo?
-    strings.add("Paco");
-    strings.add("Juan");
-    strings.add("Juana");
-    strings.add("Francisco");
-    strings.add("Francisca");
-    strings.add("Bart");
-    strings.add("Lisa");
-    strings.add("Marge");
-    strings.add("Maggie");
-    strings.add("Homer");
-    strings.add("Elsa");
-    strings.add("Anna");
-    strings.add("Olaf");
-    strings.add("Stella");
-    strings.add("Mario");
-    strings.add("Luigi");
-    strings.add("Daisy");
-    strings.add("Marinette");
-    strings.add("Adrien");
-    strings.add("Tikki");
-    strings.add("Plagg");
-    strings.add("Pancake");
-    strings.add("Cupcake");
-    strings.add("Chocolate");
-    strings.add("Sugar");
-    strings.add("Cáctus");
-    strings.add("Pétalo");
-    strings.add("Burbuja");
+    InputStream archivo;
+    try {
+      archivo = new FileInputStream("names.txt");
+      if (archivo != null) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(archivo))) {
+          String line;
+          while ((line = reader.readLine()) != null) {
+            strings.add(line);
+          }
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    }
 
     Collections.shuffle(strings);
     return strings.get(0);
+  }
+
+  public static List<String> allSpecies() {
+    List<String> strings = new ArrayList<>();
+    URL carpetaURL = Main.class.getResource("/img/poke/");
+
+    if (carpetaURL != null) {
+      File carpeta = new File(carpetaURL.getFile());
+
+      if (carpeta.exists() && carpeta.isDirectory()) {
+        File[] archivos = carpeta.listFiles();
+        for (File archivo : archivos) {
+          if (archivo.isFile()) {
+            String nombreArchivo = archivo.getName();
+            int posPunto = nombreArchivo.lastIndexOf(".");
+            if (posPunto > 0) {
+              nombreArchivo = nombreArchivo.substring(0, posPunto);
+            }
+            strings.add(nombreArchivo);
+          }
+        }
+      }
+    }
+
+    return strings;
   }
 
 }

@@ -1,5 +1,9 @@
 package application;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -13,20 +17,25 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.scene.CacheHint;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import models.Building;
 import models.Partida;
@@ -42,6 +51,9 @@ public class MainController {
 
   @FXML
   private AnchorPane fondo;
+
+  @FXML
+  private AnchorPane addEdificioPane;
 
   @FXML
   private AnchorPane decision;
@@ -69,6 +81,9 @@ public class MainController {
 
   @FXML
   private Button closeEdificio;
+  
+  @FXML
+  private Button regaloAleatorio;
 
   @FXML
   private Button construir;
@@ -150,21 +165,82 @@ public class MainController {
 
   @FXML
   private Button decidirAceptar;
-  
+
   @FXML
   private Button continuarPartida;
   
   @FXML
+  private Button reiniciarPartida;
+
+  @FXML
   private AnchorPane menuInicial;
+  
+  @FXML
+  private Label deleteText;
+  
+  @FXML
+  private Label regaloText;
+  
+  @FXML
+  private Button cancelarReinicio;
+  
+  @FXML
+  private Button confirmarReinicio;
+  
+  @FXML
+  private Button verTrabajo;
+  
+  @FXML
+  private Button closeDex;
+  
+  @FXML
+  private AnchorPane pokedex;
+  
+  @FXML
+  private AnchorPane pokedexPane;
+  
+  @FXML
+  private GridPane pokedexGrid;
+  
+  @FXML
+  private AnchorPane pantallaRegalos;
+  
+  @FXML
+  private Button closeRegalos;
+  
+  @FXML
+  private Button amistadRegalo;
+  
+  @FXML
+  private ProgressBar medidorAmistad;
+  
+  @FXML
+  private Label regalosCombate;
+  
+  @FXML
+  private Label regalosServicios;
+  
+  @FXML
+  private Label regalosMedicina;
+  
+  @FXML
+  private Label regalosEspectaculos;
+  
+  @FXML
+  private Label regalosComida;
+  
+  @FXML
+  private Label regalosVentas;
 
   private final int size = 10;
   private int iconSize = 100;
-  private int iconSizeGrande = 170;
+  private int iconSizeGrande = 160;
   private int iconSizePeque = 75;
   private double gridAncho = 2866.67;
   private double gridAlto = 1700;
-  private int salarioBase = 1;
   private boolean menu = true;
+  private int anchoCuadricula = 267;
+  private int altoCuadricula = 150;
 
   private Partida partida;
 
@@ -180,13 +256,17 @@ public class MainController {
    * Ajustes iniciales, creación de la cuadrícula y el tiempo
    */
   public void initialize() {
+    
+    applyCache(fondo);
 
     if (partida == null) {
-      partida =
-          new Partida(new ArrayList<Pokemon>(), new ArrayList<Building>(), 1, 0, 0, false, true, "11:45");
+      reiniciarPartida.setVisible(false);
+      partida = new Partida(new ArrayList<Pokemon>(), new ArrayList<Building>(), 1, 0, 0, false,
+          true, "11:45");
       partida.getPokemones().add(PokeGenerator.newPoke());
       partida.getBuildings().add(BuildingGenerator.randomVivienda());
     } else {
+      reiniciarPartida.setVisible(true);
       partida.setEmpezado(true);
       for (Pokemon pokemon : partida.getPokemones()) {
         if (pokemon.isCasa()) {
@@ -200,13 +280,22 @@ public class MainController {
 
     Button[][] buttons = new Button[size][size];
     colorCielo.setMouseTransparent(true);
+    
+    superiorGrid.setPrefHeight((size * altoCuadricula) + 200);
+    cuadricula.setPrefHeight(size * altoCuadricula);
+    cuadricula.getRowConstraints().clear();
+    for (int i = 0; i < size; i++) {
+      RowConstraints rowConstraints = new RowConstraints();
+      rowConstraints.setPrefHeight(altoCuadricula);
+      cuadricula.getRowConstraints().add(rowConstraints);
+    }
 
     for (int row = 0; row < size; row++) {
       for (int col = 0; col < size; col++) {
         Button button = new Button("");
         buttons[row][col] = button;
-        button.prefWidthProperty().bind(cuadricula.widthProperty().divide(size));
-        button.prefHeightProperty().bind(cuadricula.heightProperty().divide(size));
+        button.setPrefWidth(anchoCuadricula);
+        button.setPrefHeight(altoCuadricula - 2);
         button.setOnAction(event -> openInventory(event));
         GridPane.setHalignment(button, HPos.CENTER);
         Image image = new Image(getClass().getResourceAsStream("/img/button/sale.png"));
@@ -234,7 +323,10 @@ public class MainController {
     timeline.play();
 
   }
-  
+
+  /**
+   * Maneja todos los datos que cambian cuando el tiempo del juego avanza
+   */
   public void avanceTiempo() {
     String horaInicial = partida.getHora();
     LocalTime tiempoInicial = LocalTime.parse(horaInicial, DateTimeFormatter.ofPattern("HH:mm"));
@@ -270,8 +362,8 @@ public class MainController {
     if (!partida.isIntercalado()) {
       for (Building edificio : partida.getBuildings()) {
         if (edificio.isDesplegado() && edificio.getTrabajador() != null) {
-          partida.setDinero(
-              partida.getDinero() + calcularSalario(edificio.getTrabajador(), edificio));
+          partida
+              .setDinero(partida.getDinero() + calcularSalario(edificio.getTrabajador(), edificio));
         }
       }
       dineroText.setText(partida.getDinero() + "k");
@@ -279,6 +371,26 @@ public class MainController {
     } else {
       partida.setIntercalado(false);
     }
+  }
+  
+  /**
+   * Borra la partida guardada y recarga todo a 0
+   */
+  public void reiniciarPartida() {
+    partida.setProximoReset(true);
+    Stage stage = (Stage) fondo.getScene().getWindow();
+    stage.close();
+    try {
+      Path savefilePath = Paths.get("savefile.ser");
+      if (savefilePath.toFile().exists()) {
+        Files.delete(savefilePath);
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    Main newApp = new Main();
+    Stage newStage = new Stage();
+    newApp.start(newStage);
   }
 
   /**
@@ -300,26 +412,27 @@ public class MainController {
    * Añade las imágenes de los botones y oculta las otras ventanas inicialmente
    */
   public void prepararInventarios() {
-    
-    hora.setCache(true);
-    hora.setCacheShape(true);
-    hora.setCacheHint(CacheHint.SPEED);
-    dineroText.setCache(true);
-    dineroText.setCacheShape(true);
-    dineroText.setCacheHint(CacheHint.SPEED);
-    numeroPoke.setCache(true);
-    numeroPoke.setCacheShape(true);
-    numeroPoke.setCacheHint(CacheHint.SPEED);
-    
+
+    correo.setOnAction(event -> openDecision());
     restart.setOnAction(event -> openPrincipal());
     continuarPartida.setOnAction(event -> closePrincipal());
+    reiniciarPartida.setOnAction(event -> protocoloReiniciarPartida());
+    confirmarReinicio.setOnAction(event -> reiniciarPartida());
+    cancelarReinicio.setOnAction(event -> cancelarReiniciarPartida());
+    numeroPoke.setOnMouseClicked(event -> openDex());
+    closeInventory.setOnAction(event -> closeInventory());
+    closeDex.setOnAction(event -> closeDex());
+    closeEdificio.setOnAction(event -> closeEdificio());
+    closeDecision.setOnAction(event -> closeDecision());
+    closeRegalos.setOnAction(event -> closeRegalos());
+    regaloText.setOnMouseClicked(event -> openRegalos());
+    regaloAleatorio.setOnAction(event -> addRegaloRandom());
     openPrincipal();
-    
+
     Image imageCorreo = new Image(getClass().getResourceAsStream("/img/button/correo.png"));
     ImageView imageViewCorreo = new ImageView(imageCorreo);
     imageViewCorreo.setFitHeight(iconSizeGrande);
     imageViewCorreo.setPreserveRatio(true);
-    correo.setOnAction(event -> openDecision());
     correo.setGraphic(imageViewCorreo);
 
     Image imageDinero = new Image(getClass().getResourceAsStream("/img/button/dinero.png"));
@@ -327,13 +440,14 @@ public class MainController {
     imageViewDinero.setFitHeight(iconSize);
     imageViewDinero.setPreserveRatio(true);
     dineroText.setGraphic(imageViewDinero);
-    
+
     Image imagePoke = new Image(getClass().getResourceAsStream("/img/button/poke.png"));
     ImageView imageViewPoke = new ImageView(imagePoke);
     imageViewPoke.setFitHeight(iconSize);
     imageViewPoke.setPreserveRatio(true);
     numeroPoke.setGraphic(imageViewPoke);
-    
+    pokedex.toBack();
+
     Image imageTiempo = new Image(getClass().getResourceAsStream("/img/button/tiempo.png"));
     ImageView imageViewTiempo = new ImageView(imageTiempo);
     imageViewTiempo.setFitHeight(iconSize);
@@ -344,7 +458,6 @@ public class MainController {
     ImageView imageView = new ImageView(image);
     imageView.setFitHeight(iconSize);
     imageView.setPreserveRatio(true);
-    closeInventory.setOnAction(event -> closeInventory());
     closeInventory.setGraphic(imageView);
 
     Image image2 = new Image(getClass().getResourceAsStream("/img/button/construir.png"));
@@ -358,7 +471,6 @@ public class MainController {
     ImageView imageView3 = new ImageView(image3);
     imageView3.setFitHeight(iconSize);
     imageView3.setPreserveRatio(true);
-    closeEdificio.setOnAction(event -> closeEdificio());
     closeEdificio.setGraphic(imageView3);
 
     Image image4 = new Image(getClass().getResourceAsStream("/img/button/dinero.png"));
@@ -389,7 +501,6 @@ public class MainController {
     ImageView imageView8 = new ImageView(image8);
     imageView8.setFitHeight(iconSize);
     imageView8.setPreserveRatio(true);
-    closeDecision.setOnAction(event -> closeDecision());
     closeDecision.setGraphic(imageView8);
 
     Image image9 = new Image(getClass().getResourceAsStream("/img/button/normal.png"));
@@ -398,12 +509,134 @@ public class MainController {
     imageView9.setPreserveRatio(true);
     decidirAceptar.setGraphic(imageView9);
     decidirAceptar.setVisible(false);
+    
+    Image image10 = new Image(getClass().getResourceAsStream("/img/button/close.png"));
+    ImageView imageView10 = new ImageView(image10);
+    imageView10.setFitHeight(iconSize);
+    imageView10.setPreserveRatio(true);
+    closeDex.setGraphic(imageView10);
+    
+    Image image11 = new Image(getClass().getResourceAsStream("/img/button/close.png"));
+    ImageView imageView11 = new ImageView(image11);
+    imageView11.setFitHeight(iconSize);
+    imageView11.setPreserveRatio(true);
+    closeRegalos.setGraphic(imageView11);
+    
+    Image imageContinuar = new Image(getClass().getResourceAsStream("/img/button/derecha.png"));
+    ImageView imageViewContinuar = new ImageView(imageContinuar);
+    imageViewContinuar.setFitHeight(iconSize);
+    imageViewContinuar.setPreserveRatio(true);
+    continuarPartida.setGraphic(imageViewContinuar);
+    
+    Image imageParaReinicio = new Image(getClass().getResourceAsStream("/img/button/triste.png"));
+    ImageView imageViewParaReinicio = new ImageView(imageParaReinicio);
+    imageViewParaReinicio.setFitHeight(iconSize);
+    imageViewParaReinicio.setPreserveRatio(true);
+    reiniciarPartida.setGraphic(imageViewParaReinicio);
+
+    Image imageCancelar = new Image(getClass().getResourceAsStream("/img/button/close.png"));
+    ImageView imageViewCancelar = new ImageView(imageCancelar);
+    imageViewCancelar.setFitHeight(iconSize);
+    imageViewCancelar.setPreserveRatio(true);
+    cancelarReinicio.setGraphic(imageViewCancelar);
+    
+    Image imageReiniciar = new Image(getClass().getResourceAsStream("/img/button/normal.png"));
+    ImageView imageViewReiniciar = new ImageView(imageReiniciar);
+    imageViewReiniciar.setFitHeight(iconSize);
+    imageViewReiniciar.setPreserveRatio(true);
+    confirmarReinicio.setGraphic(imageViewReiniciar);
+    
+    Image imageTrabajo = new Image(getClass().getResourceAsStream("/img/button/construir.png"));
+    ImageView imageViewTrabajo = new ImageView(imageTrabajo);
+    imageViewTrabajo.setFitHeight(iconSize);
+    imageViewTrabajo.setPreserveRatio(true);
+    verTrabajo.setGraphic(imageViewTrabajo);
+    
+    Image imageRegalo = new Image(getClass().getResourceAsStream("/img/button/regalo.png"));
+    ImageView imageViewRegalo = new ImageView(imageRegalo);
+    imageViewRegalo.setFitHeight(iconSize);
+    imageViewRegalo.setPreserveRatio(true);
+    regaloText.setGraphic(imageViewRegalo);
+    
+    Image imageRegaloCombate = new Image(getClass().getResourceAsStream("/img/clases/Combate.png"));
+    ImageView imageViewRegaloCombate = new ImageView(imageRegaloCombate);
+    imageViewRegaloCombate.setFitHeight(iconSize);
+    imageViewRegaloCombate.setPreserveRatio(true);
+    regalosCombate.setGraphic(imageViewRegaloCombate);
+    
+    Image imageRegaloServicios = new Image(getClass().getResourceAsStream("/img/clases/Servicios.png"));
+    ImageView imageViewRegaloServicios = new ImageView(imageRegaloServicios);
+    imageViewRegaloServicios.setFitHeight(iconSize);
+    imageViewRegaloServicios.setPreserveRatio(true);
+    regalosServicios.setGraphic(imageViewRegaloServicios);
+    
+    Image imageRegaloMedicina = new Image(getClass().getResourceAsStream("/img/clases/Medicina.png"));
+    ImageView imageViewRegaloMedicina = new ImageView(imageRegaloMedicina);
+    imageViewRegaloMedicina.setFitHeight(iconSize);
+    imageViewRegaloMedicina.setPreserveRatio(true);
+    regalosMedicina.setGraphic(imageViewRegaloMedicina);
+    
+    Image imageRegaloEspectaculos = new Image(getClass().getResourceAsStream("/img/clases/Espectáculos.png"));
+    ImageView imageViewRegaloEspectaculos = new ImageView(imageRegaloEspectaculos);
+    imageViewRegaloEspectaculos.setFitHeight(iconSize);
+    imageViewRegaloEspectaculos.setPreserveRatio(true);
+    regalosEspectaculos.setGraphic(imageViewRegaloEspectaculos);
+    
+    Image imageRegaloComida = new Image(getClass().getResourceAsStream("/img/clases/Comida.png"));
+    ImageView imageViewRegaloComida = new ImageView(imageRegaloComida);
+    imageViewRegaloComida.setFitHeight(iconSize);
+    imageViewRegaloComida.setPreserveRatio(true);
+    regalosComida.setGraphic(imageViewRegaloComida);
+    
+    Image imageRegaloVentas = new Image(getClass().getResourceAsStream("/img/clases/Ventas.png"));
+    ImageView imageViewRegaloVentas = new ImageView(imageRegaloVentas);
+    imageViewRegaloVentas.setFitHeight(iconSize);
+    imageViewRegaloVentas.setPreserveRatio(true);
+    regalosVentas.setGraphic(imageViewRegaloVentas);
+    
+    Image imageAmistad = new Image(getClass().getResourceAsStream("/img/button/amistad.png"));
+    ImageView imageViewAmistad = new ImageView(imageAmistad);
+    imageViewAmistad.setFitHeight(iconSize);
+    imageViewAmistad.setPreserveRatio(true);
+    amistadRegalo.setGraphic(imageViewAmistad);
+    
+    Image imageRegaloAleatorio = new Image(getClass().getResourceAsStream("/img/button/regalo.png"));
+    ImageView imageViewRegaloAleatorio = new ImageView(imageRegaloAleatorio);
+    imageViewRegaloAleatorio.setFitHeight(iconSize);
+    imageViewRegaloAleatorio.setPreserveRatio(true);
+    regaloAleatorio.setGraphic(imageViewRegaloAleatorio);
 
     inventory.toBack();
     verEdificio.toBack();
     decision.toBack();
+    pantallaRegalos.toBack();
   }
   
+  /**
+   * Prepara la pantalla de resetear partida
+   */
+  public void protocoloReiniciarPartida() {
+    deleteText.setVisible(true);
+	reiniciarPartida.setVisible(false);
+	continuarPartida.setVisible(false);
+	cancelarReinicio.setVisible(true);
+	confirmarReinicio.setVisible(true);
+  }
+  
+  /** 
+   * Vuelve al menú principal
+   */
+  public void cancelarReiniciarPartida() {
+    deleteText.setVisible(false);
+    reiniciarPartida.setVisible(true);
+    continuarPartida.setVisible(true);
+    cancelarReinicio.setVisible(false);
+    confirmarReinicio.setVisible(false);
+  }
+
+  /**
+   * Cierra el menú principal
+   */
   public void closePrincipal() {
     menu = false;
     menuInicial.toBack();
@@ -417,14 +650,20 @@ public class MainController {
     dineroText.setVisible(true);
     restart.setVisible(true);
     numeroPoke.setVisible(true);
+    deleteText.setVisible(false);
+    regaloText.setVisible(true);
   }
-  
+
+  /**
+   * Abre el menú principal
+   */
   public void openPrincipal() {
     menu = true;
     if (!partida.isEmpezado()) {
       partida.setEmpezado(true);
     } else {
       continuarPartida.setText("Continuar partida");
+      reiniciarPartida.setVisible(true);
     }
     menuInicial.toFront();
     hora.setVisible(false);
@@ -434,13 +673,22 @@ public class MainController {
     dineroText.setVisible(false);
     restart.setVisible(false);
     numeroPoke.setVisible(false);
+    regaloText.setVisible(false);
   }
 
+  /**
+   * Cierra el inventario
+   */
   public void closeInventory() {
     inventory.toBack();
     construir.setVisible(false);
   }
 
+  /**
+   * Devuelve el nombre de un pokémon con su especie
+   * @param pokemon
+   * @return
+   */
   public String fullName(Pokemon pokemon) {
     return pokemon.getNombre() + " (" + pokemon.getImage() + ")";
   }
@@ -569,11 +817,129 @@ public class MainController {
     }
   }
 
+  /**
+   * Cierra el menú de decisiones
+   */
   public void closeDecision() {
     partida.setNewDecision(false);
     decision1.setSelected(false);
     decision2.setSelected(false);
     decision.toBack();
+  }
+  
+  /**
+   * Cierra la pokedex
+   */
+  public void closeDex() {
+    pokedex.toBack();
+  }
+  
+  /**
+   * Cierra la pantalla de regalos
+   */
+  public void closeRegalos() {
+    pantallaRegalos.toBack();
+  }
+  
+  /**
+   * Prepara la pantalla de regalos
+   * 
+   * @param event
+   */
+  public void openRegalos() {
+    regalosCombate.setText("x " + partida.getRegalosCombate());
+    regalosMedicina.setText("x " + partida.getRegalosMedicina());
+    regalosVentas.setText("x " + partida.getRegalosVentas());
+    regalosEspectaculos.setText("x " + partida.getRegalosEspectaculos());
+    regalosComida.setText("x " + partida.getRegalosComida());
+    regalosServicios.setText("x " + partida.getRegalosServicios());
+    pantallaRegalos.toFront();
+    if (partida.getDinero() >= 50) {
+      regaloAleatorio.setVisible(true);
+    } else {
+      regaloAleatorio.setVisible(false);
+    }
+  }
+  
+  public void addRegaloRandom() {
+    String[] selectedStrings = PokeGenerator.likesAndDislikes();
+    addRegalo(selectedStrings[0]);
+    partida.setDinero(partida.getDinero() - 50);
+    dineroText.setText(partida.getDinero() + "k");
+  }
+  
+  /**
+   * Añade un regalo del tipo indicado al inventario
+   * @param type
+   */
+  public void addRegalo(String type) {
+    switch (type) {
+      case "Combate":
+		partida.setRegalosCombate(partida.getRegalosCombate() + 1);
+		break;
+      case "Medicina":
+        partida.setRegalosMedicina(partida.getRegalosMedicina() + 1);
+        break;
+      case "Ventas":
+        partida.setRegalosVentas(partida.getRegalosVentas() + 1);
+        break;
+      case "Espectáculos":
+        partida.setRegalosEspectaculos(partida.getRegalosEspectaculos() + 1);
+        break;
+      case "Servicios":
+        partida.setRegalosServicios(partida.getRegalosServicios() + 1);
+        break;
+      case "Comida":
+        partida.setRegalosComida(partida.getRegalosComida() + 1);
+        break;
+    }
+    openRegalos();
+  }
+  
+  /**
+   * Prepara la Pokedex
+   * 
+   * @param event
+   */
+  public void openDex() {
+    int numColumns = 7;
+    int numRows = PokeGenerator.allSpecies().size() / numColumns;
+    if (PokeGenerator.allSpecies().size() % numColumns != 0) {
+      numRows++;
+    }
+    pokedexPane.setPrefHeight(numRows * 175);
+    pokedexGrid.setPrefHeight(numRows * 175);
+    pokedexGrid.getRowConstraints().clear();
+    for (int i = 0; i < numRows; i++) {
+      RowConstraints rowConstraints = new RowConstraints();
+      rowConstraints.setPrefHeight(175);
+      pokedexGrid.getRowConstraints().add(rowConstraints);
+    }
+    int i = 0;
+    pokedexGrid.getChildren().clear();
+
+    for (String pokedexMon : PokeGenerator.allSpecies()) {
+      boolean pokeExists = false;
+      Image image =
+          new Image(getClass().getResourceAsStream("/img/poke/" + pokedexMon + ".png"));
+      ImageView imageView = new ImageView(image);
+      imageView.setFitHeight(175);
+      imageView.setPreserveRatio(true);
+      for (Pokemon selfMon : partida.getPokemones()) {
+        if (selfMon.getImage().equals(pokedexMon)) {
+          pokeExists = true;
+          break;
+        }
+      }
+      if (!pokeExists) {
+        ColorAdjust colorAdjust = new ColorAdjust();
+        colorAdjust.setBrightness(-1.0);
+        imageView.setEffect(colorAdjust);
+      }
+      pokedexGrid.add(imageView, i % numColumns, i / numColumns);
+      i++;
+    }
+    pokedex.toFront();
   }
 
   /**
@@ -586,8 +952,25 @@ public class MainController {
     ToggleButton[] toggleButtons = new ToggleButton[partida.getBuildings().size()];
     ToggleGroup toggleGroup = new ToggleGroup();
     int numColumns = 4;
+    int totalNot = 0;
+    for (Building building : partida.getBuildings()) {
+      if (!building.isDesplegado()) {
+        totalNot++;
+      }
+    }
+    int numRows = totalNot / numColumns;
+    if (totalNot % numColumns != 0) {
+      numRows++;
+    }
+    addEdificioPane.setPrefHeight(numRows * altoCuadricula);
+    addEdificio.setPrefHeight(numRows * altoCuadricula);
+    pokedexGrid.getRowConstraints().clear();
+    for (int i = 0; i < numRows; i++) {
+      RowConstraints rowConstraints = new RowConstraints();
+      rowConstraints.setPrefHeight(altoCuadricula);
+      addEdificio.getRowConstraints().add(rowConstraints);
+    }
     int i = 0;
-
     addEdificio.getChildren().clear();
 
     for (Building building : partida.getBuildings()) {
@@ -604,9 +987,8 @@ public class MainController {
           }
         });
         toggleButtons[i] = toggleButton;
-        toggleButton.prefWidthProperty().bind(cuadricula.widthProperty().divide(size));
-        toggleButton.prefHeightProperty().bind(cuadricula.heightProperty().divide(size));
-        GridPane.setHalignment(toggleButton, HPos.CENTER);
+        toggleButton.setPrefWidth(anchoCuadricula);
+        toggleButton.setPrefHeight(altoCuadricula - 8);
         Image image =
             new Image(getClass().getResourceAsStream("/img/" + building.getImage() + ".png"));
         ImageView imageView = new ImageView(image);
@@ -640,7 +1022,7 @@ public class MainController {
   public void construir(Button ubicacion, Building edificio) {
     Image image = new Image(getClass().getResourceAsStream("/img/" + edificio.getImage() + ".png"));
     ImageView imageView = new ImageView(image);
-    imageView.setFitHeight(ubicacion.getPrefHeight());
+    imageView.setFitHeight(altoCuadricula - 8);
     imageView.setPreserveRatio(true);
     ubicacion.setGraphic(imageView);
     ubicacion.setOnAction(event -> infoEdificio(event));
@@ -667,11 +1049,16 @@ public class MainController {
     }
     closeInventory();
   }
-  
+
+  /**
+   * Rellena la cuadricula con los edificios donde los construiste
+   * @param ubicacion
+   * @param edificio
+   */
   public void construirTrasGuardado(Button ubicacion, Building edificio) {
     Image image = new Image(getClass().getResourceAsStream("/img/" + edificio.getImage() + ".png"));
     ImageView imageView = new ImageView(image);
-    imageView.fitHeightProperty().bind(cuadricula.heightProperty().divide(size));
+    imageView.setFitHeight(altoCuadricula - 8);
     imageView.setPreserveRatio(true);
     ubicacion.setGraphic(imageView);
     ubicacion.setOnAction(event -> infoEdificio(event));
@@ -684,6 +1071,9 @@ public class MainController {
     closeInventory();
   }
 
+  /**
+   * Cierra el menú de info de edificio
+   */
   public void closeEdificio() {
     verEdificio.toBack();
   }
@@ -697,7 +1087,7 @@ public class MainController {
     Button ubicacion = (Button) eventOrigen.getSource();
     Building edificio = (Building) ubicacion.getUserData();
     Image image = new Image(getClass().getResourceAsStream("/img/" + edificio.getImage() + ".png"));
-    imagenEdificio.setFitHeight(ubicacion.getPrefHeight());
+    imagenEdificio.setFitHeight(altoCuadricula);
     imagenEdificio.setPreserveRatio(true);
     nombreEdificio.setText(edificio.getImage());
     imagenEdificio.setImage(image);
@@ -717,8 +1107,10 @@ public class MainController {
       cambiarPokeIzq.setVisible(false);
       pokeTrabajador.setImage(null);
       trabajador.setVisible(false);
-      produccionEdificio.setVisible(false);
       if (edificio.getViviendo() != null) {
+        medidorAmistad.setVisible(true);
+        amistadRegalo.setVisible(true);
+        amistadRegalo.setText(String.valueOf(edificio.getViviendo().getAmistad()));
         Image imageViviendo = new Image(getClass()
             .getResourceAsStream("/img/poke/" + edificio.getViviendo().getImage() + ".png"));
         pokeViviendo.setImage(imageViviendo);
@@ -739,7 +1131,18 @@ public class MainController {
         dislikePoke.setText(edificio.getViviendo().getDislike());
         descTrabajo.setVisible(true);
         descTrabajo.setText(getPokeWork(edificio.getViviendo()));
+        produccionEdificio.setText("1 Pokémon vive aquí");
+        if (edificio.getViviendo().isTrabaja()) {
+          verTrabajo.setVisible(true);
+          verTrabajo.setOnAction(event -> infoEdificioTrue(getPokeBuilding(edificio.getViviendo())));
+        } else {
+          verTrabajo.setVisible(false);
+        }
       } else {
+        medidorAmistad.setVisible(false);
+        amistadRegalo.setVisible(false);
+        verTrabajo.setVisible(false);
+        produccionEdificio.setText("Ningún Pokémon vive aquí");
         Image imageViviendo = new Image(getClass().getResourceAsStream("/img/button/no.png"));
         pokeViviendo.setImage(imageViviendo);
         nombreViviendo.setText("Vacío");
@@ -752,26 +1155,30 @@ public class MainController {
       pokeViviendo.setVisible(true);
       nombreViviendo.setVisible(true);
     } else {
+      medidorAmistad.setVisible(false);
+      amistadRegalo.setVisible(false);
       descTrabajo.setVisible(false);
       dislikePoke.setVisible(false);
       likePoke.setVisible(false);
       likeIcon.setVisible(false);
       dislikeIcon.setVisible(false);
       trabajador.setVisible(true);
-      produccionEdificio.setVisible(true);
       cambiarPokeDer.setVisible(true);
       cambiarPokeIzq.setVisible(true);
       pokeViviendo.setVisible(false);
+      verTrabajo.setVisible(false);
       nombreViviendo.setVisible(false);
       if (edificio.getTrabajador() == null) {
-        produccionEdificio.setText("Produce " + 0 + "k cada 30min");
+        produccionEdificio.setText("Producción no activa");
         Image imageEmpty = new Image(getClass().getResourceAsStream("/img/button/construir.png"));
         pokeTrabajador.setFitHeight(iconSize);
         pokeTrabajador.setPreserveRatio(true);
         pokeTrabajador.setImage(imageEmpty);
         trabajador.setText("Sin trabajador");
         trabajador.setGraphic(null);
+        pokeTrabajador.setOnMouseClicked(null);
       } else {
+        pokeTrabajador.setOnMouseClicked(event -> clickPokeSpawnNoSearch(edificio.getTrabajador()));
         produccionEdificio.setText(
             "Produce " + calcularSalario(edificio.getTrabajador(), edificio) + "k cada 30min");
         Image imagePoke = new Image(getClass()
@@ -792,6 +1199,57 @@ public class MainController {
     }
     verEdificio.toFront();
   }
+  
+  /**
+   * Muestra el menú de información del edificio seleccionado (empleado)
+   * 
+   * @param eventOrigen
+   */
+  public void infoEdificioTrue(Building edificio) {
+    Image image = new Image(getClass().getResourceAsStream("/img/" + edificio.getImage() + ".png"));
+    imagenEdificio.setFitHeight(altoCuadricula);
+    imagenEdificio.setPreserveRatio(true);
+    nombreEdificio.setText(edificio.getImage());
+    imagenEdificio.setImage(image);
+    claseEdificio.setText(edificio.getClase());
+    Image imageClase =
+        new Image(getClass().getResourceAsStream("/img/clases/" + edificio.getClase() + ".png"));
+    ImageView imageViewClase = new ImageView(imageClase);
+    imageViewClase.setFitHeight(iconSizePeque);
+    imageViewClase.setPreserveRatio(true);
+    claseEdificio.setGraphic(imageViewClase);
+    descTrabajo.setVisible(false);
+    dislikePoke.setVisible(false);
+    likePoke.setVisible(false);
+    likeIcon.setVisible(false);
+    dislikeIcon.setVisible(false);
+    trabajador.setVisible(true);
+    cambiarPokeDer.setVisible(true);
+    cambiarPokeIzq.setVisible(true);
+    pokeViviendo.setVisible(false);
+    verTrabajo.setVisible(false);
+    nombreViviendo.setVisible(false);
+    medidorAmistad.setVisible(false);
+    amistadRegalo.setVisible(false);
+    pokeTrabajador.setOnMouseClicked(event -> clickPokeSpawnNoSearch(edificio.getTrabajador()));
+    produccionEdificio.setText(
+        "Produce " + calcularSalario(edificio.getTrabajador(), edificio) + "k cada 30min");
+    Image imagePoke = new Image(getClass()
+        .getResourceAsStream("/img/poke/" + edificio.getTrabajador().getImage() + ".png"));
+    pokeTrabajador.setFitHeight(iconSize);
+    pokeTrabajador.setPreserveRatio(true);
+    pokeTrabajador.setImage(imagePoke);
+    trabajador.setText(edificio.getTrabajador().getNombre());
+    Image imageEstado = new Image(getClass().getResourceAsStream(
+        "/img/button/" + calcularSatisfaccion(edificio.getTrabajador(), edificio) + ".png"));
+    ImageView imageView = new ImageView(imageEstado);
+    imageView.setFitHeight(iconSizePeque);
+    imageView.setPreserveRatio(true);
+    trabajador.setGraphic(imageView);
+    cambiarPokeDer.setOnAction(event -> cambiarTrabajador(event, edificio));
+    cambiarPokeIzq.setOnAction(event -> retrocederTrabajador(event, edificio));
+    verEdificio.toFront();
+  }
 
   /**
    * Muestra la información de un edificio pero usando un Pokemon de base
@@ -800,7 +1258,7 @@ public class MainController {
    */
   public void infoVivienda(Building edificio) {
     Image image = new Image(getClass().getResourceAsStream("/img/" + edificio.getImage() + ".png"));
-    imagenEdificio.setFitHeight(150);
+    imagenEdificio.setFitHeight(altoCuadricula);
     imagenEdificio.setPreserveRatio(true);
     nombreEdificio.setText(edificio.getImage());
     imagenEdificio.setImage(image);
@@ -815,12 +1273,21 @@ public class MainController {
     cambiarPokeIzq.setVisible(false);
     pokeTrabajador.setImage(null);
     trabajador.setVisible(false);
-    produccionEdificio.setVisible(false);
+    produccionEdificio.setText("1 Pokémon vive aquí");
+    medidorAmistad.setVisible(true);
+    amistadRegalo.setVisible(true);
+    amistadRegalo.setText(String.valueOf(edificio.getViviendo().getAmistad()));
     Image imageViviendo = new Image(
         getClass().getResourceAsStream("/img/poke/" + edificio.getViviendo().getImage() + ".png"));
     pokeViviendo.setImage(imageViviendo);
     nombreViviendo.setText(fullName(edificio.getViviendo()));
     pokeViviendo.setVisible(true);
+    if (edificio.getViviendo().isTrabaja()) {
+      verTrabajo.setVisible(true);
+      verTrabajo.setOnAction(event -> infoEdificioTrue(getPokeBuilding(edificio.getViviendo())));
+    } else {
+      verTrabajo.setVisible(false);
+    }
     nombreViviendo.setVisible(true);
     Image imageLike = new Image(
         getClass().getResourceAsStream("/img/clases/" + edificio.getViviendo().getLike() + ".png"));
@@ -849,22 +1316,28 @@ public class MainController {
    * @return
    */
   private String calcularSatisfaccion(Pokemon pokeTrabajador, Building edificio) {
-    if (pokeTrabajador.getLike() == edificio.getClase()) {
+    if (pokeTrabajador.getLike().equals(edificio.getClase())) {
       return "feliz";
-    } else if (pokeTrabajador.getDislike() == edificio.getClase()) {
+    } else if (pokeTrabajador.getDislike().equals(edificio.getClase())) {
       return "triste";
     } else {
       return "normal";
     }
   }
 
+  /**
+   * Calcula el salario dependiendo de los gustos del Pokémon
+   * @param pokeTrabajador
+   * @param edificio
+   * @return
+   */
   private int calcularSalario(Pokemon pokeTrabajador, Building edificio) {
-    if (pokeTrabajador.getLike() == edificio.getClase()) {
-      return salarioBase * 2;
-    } else if (pokeTrabajador.getDislike() == edificio.getClase()) {
-      return 0;
+    if (pokeTrabajador.getLike().equals(edificio.getClase())) {
+      return (1 + pokeTrabajador.getAmistad()) * 2;
+    } else if (pokeTrabajador.getDislike().equals(edificio.getClase())) {
+      return 0 + pokeTrabajador.getAmistad();
     } else {
-      return salarioBase;
+      return 1 + pokeTrabajador.getAmistad();
     }
   }
 
@@ -885,6 +1358,7 @@ public class MainController {
       }
       if (proximoTrabajador != null) {
         edificio.setTrabajador(proximoTrabajador);
+        pokeTrabajador.setOnMouseClicked(event -> clickPokeSpawnNoSearch(edificio.getTrabajador()));
         produccionEdificio.setText(
             "Produce " + calcularSalario(edificio.getTrabajador(), edificio) + "k cada 30min");
         proximoTrabajador.setTrabaja(true);
@@ -901,7 +1375,8 @@ public class MainController {
         imageView.setPreserveRatio(true);
         trabajador.setGraphic(imageView);
       } else {
-        produccionEdificio.setText("Produce " + 0 + "k cada 30min");
+        pokeTrabajador.setOnMouseClicked(null);
+        produccionEdificio.setText("Producción no activa");
         edificio.setTrabajador(null);
         Image imageEmpty = new Image(getClass().getResourceAsStream("/img/button/construir.png"));
         pokeTrabajador.setFitHeight(iconSize);
@@ -929,6 +1404,7 @@ public class MainController {
       if (proximoTrabajador != null) {
         edificio.getTrabajador().setTrabaja(false);
         edificio.setTrabajador(proximoTrabajador);
+        pokeTrabajador.setOnMouseClicked(event -> clickPokeSpawnNoSearch(edificio.getTrabajador()));
         produccionEdificio.setText(
             "Produce " + calcularSalario(edificio.getTrabajador(), edificio) + "k cada 30min");
         proximoTrabajador.setTrabaja(true);
@@ -945,7 +1421,8 @@ public class MainController {
         imageView.setPreserveRatio(true);
         trabajador.setGraphic(imageView);
       } else {
-        produccionEdificio.setText("Produce " + 0 + "k cada 30min");
+        pokeTrabajador.setOnMouseClicked(null);
+        produccionEdificio.setText("Producción no activa");
         edificio.getTrabajador().setTrabaja(false);
         edificio.setTrabajador(null);
         Image imageEmpty = new Image(getClass().getResourceAsStream("/img/button/construir.png"));
@@ -977,6 +1454,7 @@ public class MainController {
       }
       if (proximoTrabajador != null) {
         edificio.setTrabajador(proximoTrabajador);
+        pokeTrabajador.setOnMouseClicked(event -> clickPokeSpawnNoSearch(edificio.getTrabajador()));
         produccionEdificio.setText(
             "Produce " + calcularSalario(edificio.getTrabajador(), edificio) + "k cada 30min");
         proximoTrabajador.setTrabaja(true);
@@ -993,7 +1471,8 @@ public class MainController {
         imageView.setPreserveRatio(true);
         trabajador.setGraphic(imageView);
       } else {
-        produccionEdificio.setText("Produce " + 0 + "k cada 30min");
+        pokeTrabajador.setOnMouseClicked(null);
+        produccionEdificio.setText("Producción no activa");
         edificio.setTrabajador(null);
         Image imageEmpty = new Image(getClass().getResourceAsStream("/img/button/construir.png"));
         pokeTrabajador.setFitHeight(iconSize);
@@ -1022,6 +1501,7 @@ public class MainController {
       if (proximoTrabajador != null) {
         edificio.getTrabajador().setTrabaja(false);
         edificio.setTrabajador(proximoTrabajador);
+        pokeTrabajador.setOnMouseClicked(event -> clickPokeSpawnNoSearch(edificio.getTrabajador()));
         produccionEdificio.setText(
             "Produce " + calcularSalario(edificio.getTrabajador(), edificio) + "k cada 30min");
         proximoTrabajador.setTrabaja(true);
@@ -1038,7 +1518,8 @@ public class MainController {
         imageView.setPreserveRatio(true);
         trabajador.setGraphic(imageView);
       } else {
-        produccionEdificio.setText("Produce " + 0 + "k cada 30min");
+        pokeTrabajador.setOnMouseClicked(null);
+        produccionEdificio.setText("Producción no activa");
         edificio.getTrabajador().setTrabaja(false);
         edificio.setTrabajador(null);
         Image imageEmpty = new Image(getClass().getResourceAsStream("/img/button/construir.png"));
@@ -1077,8 +1558,8 @@ public class MainController {
     imageView.setUserData(pokemon);
     imageView.setOnMouseClicked(event -> clickPokeSpawn(event));
 
-    Timeline timeline =
-        new Timeline(new KeyFrame(Duration.seconds(2.1), event -> movePoke(imageView, 267, 150)));
+    Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(2.1),
+        event -> movePoke(imageView, anchoCuadricula, altoCuadricula)));
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();
   }
@@ -1102,9 +1583,28 @@ public class MainController {
       }
     }
   }
+  
+  /**
+   * Abre el menú de info de edificio en base a un Pokémon
+   * @param pokemon
+   */
+  private void clickPokeSpawnNoSearch(Pokemon pokemon) {
+    if (pokemon != null) {
+      for (Building edificio : partida.getBuildings()) {
+        if (edificio.getViviendo() == pokemon) {
+          dislikePoke.setVisible(true);
+          likePoke.setVisible(true);
+          likeIcon.setVisible(true);
+          dislikeIcon.setVisible(true);
+          infoVivienda(edificio);
+          break;
+        }
+      }
+    }
+  }
 
   /**
-   * Determina en qué edificio trabaja un pokemon
+   * Determina en qué edificio trabaja un pokemon (texto)
    * 
    * @param event
    */
@@ -1116,6 +1616,21 @@ public class MainController {
     }
     return "Desempleado";
   }
+  
+  /**
+   * Determina en qué edificio trabaja un pokemon (objeto)
+   * 
+   * @param event
+   */
+  private Building getPokeBuilding(Pokemon pokemon) {
+    for (Building edificio : partida.getBuildings()) {
+      if (edificio.getTrabajador() == pokemon) {
+        return edificio;
+      }
+    }
+    return null;
+  }
+
 
   /**
    * Decide aleatoriamente hacia donde se mueve el sprite
@@ -1174,7 +1689,21 @@ public class MainController {
     transition.play();
   }
 
+  /**
+   * Optimiza todos los nodos para evitar lag
+   * @param node
+   */
+  private void applyCache(Node node) {
+    node.setCache(true);
+    node.setCacheHint(CacheHint.SPEED);
 
+    if (node instanceof javafx.scene.Parent) {
+      javafx.scene.Parent parent = (javafx.scene.Parent) node;
+      for (Node child : parent.getChildrenUnmodifiable()) {
+        applyCache(child);
+      }
+    }
+  }
 
 }
 

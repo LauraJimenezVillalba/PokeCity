@@ -18,8 +18,26 @@
     -fx-background-color: transparent;
 }
 
+.scroll-pane{
+   -fx-background-color:transparent;
+}
+
+.scroll-pane .viewport {
+       -fx-background-color: transparent;
+}
+
 .toggle-button:selected {
     -fx-background-color: rgba(0.0, 255.0, 0.0, 0.5);
+    -fx-background-radius: 35.0;
+}
+
+.toggle-button:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.3);
+    -fx-background-radius: 35.0;
+}
+
+.button:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.3);
     -fx-background-radius: 35.0;
 }
 
@@ -29,4 +47,9 @@
     -fx-stroke-type: outside;
     -fx-stroke-line-cap: round;
     -fx-stroke-line-join: round;
+}
+
+.label-hover:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.3);
+    -fx-background-radius: 35.0;
 }
