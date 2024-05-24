@@ -10,156 +10,13 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="fondo" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <AnchorPane fx:id="pokedex" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);">
-         <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="643.0" layoutY="33.0" prefHeight="100.0" prefWidth="293.0" text="Pokédex" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
-               <font>
-                  <Font name="System Bold" size="56.0" />
-               </font>
-            </Label>
-            <Button fx:id="closeDex" contentDisplay="GRAPHIC_ONLY" layoutX="1278.0" layoutY="33.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" />
-            <ScrollPane hbarPolicy="NEVER" layoutX="172.0" layoutY="145.0" prefHeight="701.0" prefWidth="1235.0">
-               <content>
-                  <AnchorPane fx:id="pokedexPane" minHeight="0.0" minWidth="0.0" prefHeight="700.0" prefWidth="1225.0">
-                     <children>
-                        <GridPane fx:id="pokedexGrid" prefHeight="700.0" prefWidth="1225.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                        </GridPane>
-                     </children>
-                  </AnchorPane>
-               </content>
-            </ScrollPane>
-         </children>
-      </AnchorPane>
-      <AnchorPane fx:id="inventory" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);">
-         <children>
-            <Label fx:id="edificiosVacio" alignment="CENTER" contentDisplay="CENTER" layoutX="445.0" layoutY="340.0" prefHeight="175.0" prefWidth="700.0" text="No hay más edificios disponibles por ahora" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS" visible="false" wrapText="true">
-               <font>
-                  <Font size="56.0" />
-               </font>
-            </Label>
-            <Button fx:id="closeInventory" contentDisplay="GRAPHIC_ONLY" layoutX="1278.0" layoutY="33.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" />
-            <Button fx:id="construir" layoutX="563.0" layoutY="751.0" mnemonicParsing="false" prefHeight="121.0" prefWidth="463.0" text="Construir" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="56.0" />
-               </font>
-            </Button>
-            <ScrollPane hbarPolicy="NEVER" layoutX="260.0" layoutY="142.0" prefHeight="604.0" prefWidth="1071.0">
-              <content>
-                <AnchorPane fx:id="addEdificioPane" minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="1067.0">
-                     <children>
-                        <GridPane fx:id="addEdificio" prefHeight="600.0" prefWidth="1067.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                        </GridPane>
-                     </children>
-                  </AnchorPane>
-              </content>
-            </ScrollPane>
-         </children>
-      </AnchorPane>
-      <AnchorPane fx:id="decision" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);">
-         <children>
-            <Button fx:id="closeDecision" contentDisplay="GRAPHIC_ONLY" layoutX="1278.0" layoutY="33.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" />
-            <Button fx:id="decidirAceptar" layoutX="563.0" layoutY="743.0" mnemonicParsing="false" prefHeight="121.0" prefWidth="463.0" text="Aceptar" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="56.0" />
-               </font>
-            </Button>
-            <ToggleButton fx:id="decision1" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="262.0" layoutY="246.0" mnemonicParsing="false" prefHeight="308.0" prefWidth="496.0" text="+1 Edificio de clase Medicina" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-               <font>
-                  <Font name="System Bold" size="36.0" />
-               </font>
-            </ToggleButton>
-            <ToggleButton fx:id="decision2" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="832.0" layoutY="246.0" mnemonicParsing="false" prefHeight="308.0" prefWidth="496.0" text="+2 Futuros ciudadanos nuevos" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-               <font>
-                  <Font name="System Bold" size="36.0" />
-               </font>
-            </ToggleButton>
-         </children>
-      </AnchorPane>
-      <AnchorPane fx:id="menuInicial" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);">
-         <children>
-            <Button fx:id="continuarPartida" layoutX="383.0" layoutY="504.0" mnemonicParsing="false" prefHeight="121.0" prefWidth="800.0" text="Empezar partida" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="56.0" />
-               </font>
-            </Button>
-            <ImageView fitHeight="386.0" fitWidth="815.0" layoutX="393.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../img/logo.png" />
-               </image>
-            </ImageView>
-            <Button fx:id="reiniciarPartida" layoutX="383.0" layoutY="652.0" mnemonicParsing="false" prefHeight="121.0" prefWidth="800.0" text="Reiniciar partida" textFill="WHITE" visible="false">
-               <font>
-                  <Font name="System Bold" size="56.0" />
-               </font>
-            </Button>
-            <Label fx:id="deleteText" alignment="CENTER" contentDisplay="CENTER" layoutX="451.0" layoutY="504.0" prefHeight="175.0" prefWidth="700.0" text="¿Estás seguro? Perderás todo tu progreso" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS" visible="false" wrapText="true">
-               <font>
-                  <Font name="System Bold" size="56.0" />
-               </font>
-            </Label>
-            <Button fx:id="confirmarReinicio" contentDisplay="RIGHT" layoutX="333.0" layoutY="679.0" mnemonicParsing="false" prefHeight="121.0" prefWidth="450.0" text="Aceptar" textFill="WHITE" visible="false">
-               <font>
-                  <Font name="System Bold" size="56.0" />
-               </font>
-            </Button>
-            <Button fx:id="cancelarReinicio" contentDisplay="RIGHT" layoutX="820.0" layoutY="679.0" mnemonicParsing="false" prefHeight="121.0" prefWidth="450.0" text="Cancelar" textFill="WHITE" visible="false">
-               <font>
-                  <Font name="System Bold" size="56.0" />
-               </font>
-            </Button>
-         </children>
-      </AnchorPane>
-      <AnchorPane fx:id="pantallaRegalos" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);">
-         <children>
-            <Button fx:id="closeRegalos" contentDisplay="GRAPHIC_ONLY" layoutX="1278.0" layoutY="33.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" />
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="341.0" layoutY="104.0" prefHeight="232.0" prefWidth="918.0" text="Compra varios tipos de regalos en los diferentes edificios para darselos a tus ciudadanos" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
-               <font>
-                  <Font name="System Bold" size="48.0" />
-               </font>
-            </Label>
-            <Label fx:id="regalosMedicina" alignment="CENTER" layoutX="670.0" layoutY="363.0" prefHeight="130.0" prefWidth="262.0" text="x 1" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
-               <font>
-                  <Font name="System Bold" size="56.0" />
-               </font>
-            </Label>
-            <Label fx:id="regalosComida" alignment="CENTER" layoutX="670.0" layoutY="511.0" prefHeight="130.0" prefWidth="262.0" text="x 1" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
-               <font>
-                  <Font name="System Bold" size="56.0" />
-               </font>
-            </Label>
-            <Label fx:id="regalosCombate" alignment="CENTER" layoutX="378.0" layoutY="363.0" prefHeight="130.0" prefWidth="262.0" text="x 1" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
-               <font>
-                  <Font name="System Bold" size="56.0" />
-               </font>
-            </Label>
-            <Label fx:id="regalosServicios" alignment="CENTER" layoutX="961.0" layoutY="363.0" prefHeight="130.0" prefWidth="262.0" text="x 1" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
-               <font>
-                  <Font name="System Bold" size="56.0" />
-               </font>
-            </Label>
-            <Label fx:id="regalosEspectaculos" alignment="CENTER" layoutX="378.0" layoutY="511.0" prefHeight="130.0" prefWidth="262.0" text="x 1" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
-               <font>
-                  <Font name="System Bold" size="56.0" />
-               </font>
-            </Label>
-            <Label fx:id="regalosVentas" alignment="CENTER" layoutX="961.0" layoutY="511.0" prefHeight="130.0" prefWidth="262.0" text="x 1" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
-               <font>
-                  <Font name="System Bold" size="56.0" />
-               </font>
-            </Label>
-            <Button fx:id="regaloAleatorio" layoutX="512.0" layoutY="675.0" mnemonicParsing="false" prefHeight="140.0" prefWidth="579.0" text="Comprar aleatorio (50k)" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-               <font>
-                  <Font name="System Bold" size="36.0" />
-               </font>
-            </Button>
-         </children>
-      </AnchorPane>
       <ScrollPane fx:id="scrollCuadricula" hbarPolicy="ALWAYS" hmax="1.0" hvalue="0.5" prefHeight="900.0" prefWidth="1600.0" vbarPolicy="ALWAYS" vmax="1.0" vvalue="0.5">
          <content>
             <AnchorPane fx:id="superiorGrid" prefHeight="1700.0" prefWidth="2866.67">
@@ -215,8 +72,68 @@
             <String fx:value="label-hover" />
          </styleClass>
       </Label>
+      <AnchorPane fx:id="pantallaRegalos" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);">
+         <children>
+            <Button fx:id="closeRegalos" contentDisplay="GRAPHIC_ONLY" layoutX="1278.0" layoutY="33.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="360.0" layoutY="103.0" prefHeight="232.0" prefWidth="918.0" text="Compra varios tipos de regalos en los diferentes edificios para darselos a tus ciudadanos" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="48.0" />
+               </font>
+            </Label>
+            <Label fx:id="regalosMedicina" alignment="CENTER" layoutX="689.0" layoutY="362.0" prefHeight="130.0" prefWidth="262.0" text="x 1" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
+               <font>
+                  <Font name="System Bold" size="56.0" />
+               </font>
+            </Label>
+            <Label fx:id="regalosComida" alignment="CENTER" layoutX="690.0" layoutY="492.0" prefHeight="130.0" prefWidth="262.0" text="x 1" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
+               <font>
+                  <Font name="System Bold" size="56.0" />
+               </font>
+            </Label>
+            <Label fx:id="regalosCombate" alignment="CENTER" layoutX="397.0" layoutY="362.0" prefHeight="130.0" prefWidth="262.0" text="x 1" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
+               <font>
+                  <Font name="System Bold" size="56.0" />
+               </font>
+            </Label>
+            <Label fx:id="regalosServicios" alignment="CENTER" layoutX="980.0" layoutY="362.0" prefHeight="130.0" prefWidth="262.0" text="x 1" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
+               <font>
+                  <Font name="System Bold" size="56.0" />
+               </font>
+            </Label>
+            <Label fx:id="regalosEspectaculos" alignment="CENTER" layoutX="398.0" layoutY="492.0" prefHeight="130.0" prefWidth="262.0" text="x 1" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
+               <font>
+                  <Font name="System Bold" size="56.0" />
+               </font>
+            </Label>
+            <Label fx:id="regalosVentas" alignment="CENTER" layoutX="981.0" layoutY="492.0" prefHeight="130.0" prefWidth="262.0" text="x 1" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
+               <font>
+                  <Font name="System Bold" size="56.0" />
+               </font>
+            </Label>
+            <Button fx:id="regaloAleatorio" layoutX="531.0" layoutY="674.0" mnemonicParsing="false" prefHeight="140.0" prefWidth="579.0" text="Comprar aleatorio (50k)" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </Button>
+            <Label fx:id="cantidadHuevos" alignment="CENTER" contentDisplay="TOP" layoutX="113.0" layoutY="320.0" prefHeight="302.0" prefWidth="262.0" text="x 1" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
+               <font>
+                  <Font name="System Bold" size="56.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
       <AnchorPane fx:id="verEdificio" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);">
          <children>
+            <Button fx:id="demoler" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" layoutX="1350.0" layoutY="683.0" mnemonicParsing="false" prefHeight="170.0" prefWidth="170.0" textFill="WHITE">
+               <font>
+                  <Font size="56.0" />
+               </font>
+            </Button>
+            <Label fx:id="nombreViviendo" contentDisplay="RIGHT" layoutX="539.0" layoutY="329.0" prefHeight="83.0" prefWidth="902.0" styleClass="label-hover" text="Bulbasaur" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
+               <font>
+                  <Font name="System Bold" size="56.0" />
+               </font>
+            </Label>
             <Button fx:id="closeEdificio" contentDisplay="GRAPHIC_ONLY" layoutX="1278.0" layoutY="33.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" />
             <Label fx:id="nombreEdificio" contentDisplay="CENTER" layoutX="646.0" layoutY="59.0" prefHeight="175.0" prefWidth="622.0" text="Laboratorio de investigación" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
                <font>
@@ -243,11 +160,6 @@
                   <Image url="@../img/poke/Bulbasaur.png" />
                </image>
             </ImageView>
-            <Label fx:id="nombreViviendo" contentDisplay="RIGHT" layoutX="539.0" layoutY="329.0" prefHeight="83.0" prefWidth="902.0" text="Bulbasaur" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
-               <font>
-                  <Font name="System Bold" size="56.0" />
-               </font>
-            </Label>
             <Label fx:id="likePoke" layoutX="632.0" layoutY="408.0" prefHeight="83.0" prefWidth="323.0" text="Espectáculos" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
                <font>
                   <Font name="System Bold" size="36.0" />
@@ -270,28 +182,212 @@
             </ImageView>
             <Label fx:id="descTrabajo" layoutX="497.0" layoutY="505.0" prefHeight="83.0" prefWidth="902.0" text="Trabaja en:" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
                <font>
-                  <Font name="System Bold" size="48.0" />
+                  <Font name="System Bold" size="36.0" />
                </font>
             </Label>
-            <Button fx:id="cambiarPokeIzq" contentDisplay="GRAPHIC_ONLY" layoutX="668.0" layoutY="329.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" />
-            <Label fx:id="trabajador" alignment="CENTER" contentDisplay="RIGHT" layoutX="673.0" layoutY="429.0" prefHeight="83.0" prefWidth="371.0" text="Bulbasaur" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
+            <Button fx:id="cambiarPokeIzq" contentDisplay="GRAPHIC_ONLY" layoutX="594.0" layoutY="330.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" />
+            <Label fx:id="trabajador" alignment="CENTER" contentDisplay="RIGHT" layoutX="599.0" layoutY="430.0" prefHeight="83.0" prefWidth="371.0" text="Bulbasaur" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
                <font>
                   <Font name="System Bold" size="48.0" />
                </font>
             </Label>
-            <Button fx:id="cambiarPokeDer" contentDisplay="GRAPHIC_ONLY" layoutX="940.0" layoutY="329.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" />
-            <ImageView fx:id="pokeTrabajador" fitHeight="100.0" fitWidth="100.0" layoutX="808.0" layoutY="329.0" pickOnBounds="true" preserveRatio="true">
+            <Button fx:id="cambiarPokeDer" contentDisplay="GRAPHIC_ONLY" layoutX="866.0" layoutY="330.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" />
+            <ImageView fx:id="pokeTrabajador" fitHeight="100.0" fitWidth="100.0" layoutX="736.0" layoutY="330.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../img/poke/Bulbasaur.png" />
                </image>
             </ImageView>
             <Button fx:id="verTrabajo" contentDisplay="GRAPHIC_ONLY" layoutX="367.0" layoutY="497.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" />
-            <ProgressBar fx:id="medidorAmistad" layoutX="107.0" layoutY="292.0" prefHeight="75.0" prefWidth="277.0" progress="0.0" rotate="270.0" />
-            <Button fx:id="amistadRegalo" layoutX="137.0" layoutY="482.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="185.0" text="1" textFill="WHITE">
+            <ProgressBar fx:id="medidorAmistad" layoutX="93.0" layoutY="292.0" prefHeight="75.0" prefWidth="277.0" progress="0.0" rotate="270.0" />
+            <Button fx:id="amistadRegalo" layoutX="99.0" layoutY="482.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="248.0" text="1" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </Button>
+            <Button fx:id="cambiarPokeIzq2" contentDisplay="GRAPHIC_ONLY" layoutX="596.0" layoutY="522.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" />
+            <Label fx:id="trabajador2" alignment="CENTER" contentDisplay="RIGHT" layoutX="601.0" layoutY="622.0" prefHeight="83.0" prefWidth="371.0" text="Bulbasaur" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
                <font>
                   <Font name="System Bold" size="48.0" />
                </font>
+            </Label>
+            <Button fx:id="cambiarPokeDer2" contentDisplay="GRAPHIC_ONLY" layoutX="868.0" layoutY="522.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" />
+            <ImageView fx:id="pokeTrabajador2" fitHeight="100.0" fitWidth="100.0" layoutX="736.0" layoutY="522.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/poke/Bulbasaur.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="mejorarEdificio" alignment="CENTER" layoutX="50.0" layoutY="361.0" mnemonicParsing="false" prefHeight="140.0" prefWidth="415.0" text="Mejorar edificio (50k)" textAlignment="RIGHT" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
             </Button>
+            <Button fx:id="cambiarPokeIzq3" contentDisplay="GRAPHIC_ONLY" layoutX="974.0" layoutY="330.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" />
+            <Label fx:id="trabajador3" alignment="CENTER" contentDisplay="RIGHT" layoutX="979.0" layoutY="430.0" prefHeight="83.0" prefWidth="371.0" text="Bulbasaur" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
+               <font>
+                  <Font name="System Bold" size="48.0" />
+               </font>
+            </Label>
+            <Button fx:id="cambiarPokeDer3" contentDisplay="GRAPHIC_ONLY" layoutX="1246.0" layoutY="330.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" />
+            <ImageView fx:id="pokeTrabajador3" fitHeight="100.0" fitWidth="100.0" layoutX="1114.0" layoutY="330.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/poke/Bulbasaur.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="comprarRegaloEdificio" alignment="CENTER" layoutX="50.0" layoutY="544.0" mnemonicParsing="false" prefHeight="140.0" prefWidth="415.0" text="Comprar regalo (150k)" textAlignment="RIGHT" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </Button>
+            <Button fx:id="cambiarPokeIzq4" contentDisplay="GRAPHIC_ONLY" layoutX="974.0" layoutY="522.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" />
+            <Label fx:id="trabajador4" alignment="CENTER" contentDisplay="RIGHT" layoutX="979.0" layoutY="622.0" prefHeight="83.0" prefWidth="371.0" text="Bulbasaur" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
+               <font>
+                  <Font name="System Bold" size="48.0" />
+               </font>
+            </Label>
+            <Button fx:id="cambiarPokeDer4" contentDisplay="GRAPHIC_ONLY" layoutX="1246.0" layoutY="522.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" />
+            <ImageView fx:id="pokeTrabajador4" fitHeight="100.0" fitWidth="100.0" layoutX="1114.0" layoutY="522.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/poke/Bulbasaur.png" />
+               </image>
+            </ImageView>
+            <HBox fx:id="boxPoke" alignment="CENTER" layoutX="99.0" layoutY="622.0" prefHeight="200.0" prefWidth="1200.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="seleccionarRegalo" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);">
+         <children>
+            <AnchorPane layoutX="343.0" layoutY="278.0" prefHeight="293.0" prefWidth="879.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);">
+               <children>
+                  <Button fx:id="seleccionarCombate" mnemonicParsing="false" prefHeight="130.0" prefWidth="302.0" text="x 1" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="56.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="seleccionarMedicina" layoutX="306.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="302.0" text="x 1" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="56.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="seleccionarServicios" layoutX="612.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="302.0" text="x 1" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="56.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="seleccionarEspectaculos" layoutY="163.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="302.0" text="x 1" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="56.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="seleccionarComida" layoutX="306.0" layoutY="163.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="302.0" text="x 1" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="56.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="seleccionarVentas" layoutX="612.0" layoutY="163.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="302.0" text="x 1" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="56.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="menuInicial" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);">
+         <children>
+            <Button fx:id="continuarPartida" layoutX="383.0" layoutY="504.0" mnemonicParsing="false" prefHeight="121.0" prefWidth="800.0" text="Empezar partida" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="56.0" />
+               </font>
+            </Button>
+            <ImageView fx:id="logoPrincipal" fitHeight="386.0" fitWidth="815.0" layoutX="393.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/logo.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="reiniciarPartida" layoutX="383.0" layoutY="652.0" mnemonicParsing="false" prefHeight="121.0" prefWidth="800.0" text="Reiniciar partida" textFill="WHITE" visible="false">
+               <font>
+                  <Font name="System Bold" size="56.0" />
+               </font>
+            </Button>
+            <Label fx:id="deleteText" alignment="CENTER" contentDisplay="CENTER" layoutX="451.0" layoutY="504.0" prefHeight="175.0" prefWidth="700.0" text="¿Estás seguro? Perderás todo tu progreso" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS" visible="false" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="56.0" />
+               </font>
+            </Label>
+            <Button fx:id="confirmarReinicio" contentDisplay="RIGHT" layoutX="333.0" layoutY="679.0" mnemonicParsing="false" prefHeight="121.0" prefWidth="450.0" text="Aceptar" textFill="WHITE" visible="false">
+               <font>
+                  <Font name="System Bold" size="56.0" />
+               </font>
+            </Button>
+            <Button fx:id="cancelarReinicio" contentDisplay="RIGHT" layoutX="820.0" layoutY="679.0" mnemonicParsing="false" prefHeight="121.0" prefWidth="450.0" text="Cancelar" textFill="WHITE" visible="false">
+               <font>
+                  <Font name="System Bold" size="56.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="decision" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);">
+         <children>
+            <Button fx:id="closeDecision" contentDisplay="GRAPHIC_ONLY" layoutX="1278.0" layoutY="33.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" />
+            <Button fx:id="decidirAceptar" layoutX="563.0" layoutY="743.0" mnemonicParsing="false" prefHeight="121.0" prefWidth="463.0" text="Aceptar" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="56.0" />
+               </font>
+            </Button>
+            <ToggleButton fx:id="decision1" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="262.0" layoutY="246.0" mnemonicParsing="false" prefHeight="308.0" prefWidth="496.0" text="+1 Edificio de clase Medicina" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </ToggleButton>
+            <ToggleButton fx:id="decision2" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="832.0" layoutY="246.0" mnemonicParsing="false" prefHeight="308.0" prefWidth="496.0" text="+2 Futuros ciudadanos nuevos" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </ToggleButton>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="inventory" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);">
+         <children>
+            <Label fx:id="edificiosVacio" alignment="CENTER" contentDisplay="CENTER" layoutX="445.0" layoutY="340.0" prefHeight="175.0" prefWidth="700.0" text="No hay más edificios disponibles por ahora" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS" visible="false" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="56.0" />
+               </font>
+            </Label>
+            <Button fx:id="closeInventory" contentDisplay="GRAPHIC_ONLY" layoutX="1278.0" layoutY="33.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" />
+            <Button fx:id="construir" layoutX="563.0" layoutY="751.0" mnemonicParsing="false" prefHeight="121.0" prefWidth="463.0" text="Construir" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="56.0" />
+               </font>
+            </Button>
+            <ScrollPane hbarPolicy="NEVER" layoutX="260.0" layoutY="142.0" prefHeight="604.0" prefWidth="1071.0">
+              <content>
+                <AnchorPane fx:id="addEdificioPane" minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="1067.0">
+                     <children>
+                        <GridPane fx:id="addEdificio" prefHeight="600.0" prefWidth="1067.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        </GridPane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </ScrollPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="pokedex" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="643.0" layoutY="33.0" prefHeight="100.0" prefWidth="293.0" text="Pokédex" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="56.0" />
+               </font>
+            </Label>
+            <Button fx:id="closeDex" contentDisplay="GRAPHIC_ONLY" layoutX="1278.0" layoutY="33.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" />
+            <ScrollPane hbarPolicy="NEVER" layoutX="172.0" layoutY="145.0" prefHeight="701.0" prefWidth="1235.0">
+               <content>
+                  <AnchorPane fx:id="pokedexPane" minHeight="0.0" minWidth="0.0" prefHeight="700.0" prefWidth="1225.0">
+                     <children>
+                        <GridPane fx:id="pokedexGrid" prefHeight="700.0" prefWidth="1225.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        </GridPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </ScrollPane>
          </children>
       </AnchorPane>
    </children>

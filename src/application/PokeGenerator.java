@@ -1,13 +1,11 @@
 package application;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -39,24 +37,22 @@ public class PokeGenerator {
 
   public static String species() {
     List<String> strings = new ArrayList<>();
-    URL carpetaURL = Main.class.getResource("/img/poke/");
-
-    if (carpetaURL != null) {
-      File carpeta = new File(carpetaURL.getFile());
-
-      if (carpeta.exists() && carpeta.isDirectory()) {
-        File[] archivos = carpeta.listFiles();
-        for (File archivo : archivos) {
-          if (archivo.isFile()) {
-            String nombreArchivo = archivo.getName();
-            int posPunto = nombreArchivo.lastIndexOf(".");
-            if (posPunto > 0) {
-              nombreArchivo = nombreArchivo.substring(0, posPunto);
+    InputStream archivo;
+    try {
+        archivo = PokeGenerator.class.getResourceAsStream("/poke.txt");
+        if (archivo != null) {
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(archivo))) {
+              String line;
+              while ((line = reader.readLine()) != null) {
+                  line = line.replaceFirst("\\.[^.]+$", "");
+                  strings.add(line);
+              }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            strings.add(nombreArchivo);
-          }
         }
-      }
+    } catch (Exception e) {
+        e.printStackTrace();
     }
 
     Collections.shuffle(strings);
@@ -88,24 +84,22 @@ public class PokeGenerator {
 
   public static List<String> allSpecies() {
     List<String> strings = new ArrayList<>();
-    URL carpetaURL = Main.class.getResource("/img/poke/");
-
-    if (carpetaURL != null) {
-      File carpeta = new File(carpetaURL.getFile());
-
-      if (carpeta.exists() && carpeta.isDirectory()) {
-        File[] archivos = carpeta.listFiles();
-        for (File archivo : archivos) {
-          if (archivo.isFile()) {
-            String nombreArchivo = archivo.getName();
-            int posPunto = nombreArchivo.lastIndexOf(".");
-            if (posPunto > 0) {
-              nombreArchivo = nombreArchivo.substring(0, posPunto);
+    InputStream archivo;
+    try {
+        archivo = PokeGenerator.class.getResourceAsStream("/poke.txt");
+        if (archivo != null) {
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(archivo))) {
+              String line;
+              while ((line = reader.readLine()) != null) {
+                  line = line.replaceFirst("\\.[^.]+$", "");
+                  strings.add(line);
+              }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            strings.add(nombreArchivo);
-          }
         }
-      }
+    } catch (Exception e) {
+        e.printStackTrace();
     }
 
     return strings;

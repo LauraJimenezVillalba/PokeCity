@@ -2,6 +2,8 @@ package models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Partida implements Serializable {
   
@@ -26,6 +28,7 @@ public class Partida implements Serializable {
   private int regalosEspectaculos;
   private int regalosComida;
   private int regalosVentas;
+  private int huevos;
   
   public Partida(ArrayList<Pokemon> pokemones, ArrayList<Building> buildings,
       int day, int pendiente, int dinero,
@@ -46,6 +49,7 @@ public class Partida implements Serializable {
     this.regalosEspectaculos = 0;
     this.regalosComida = 0;
     this.regalosVentas = 0;
+    this.huevos = 0;
   }
 
   public ArrayList<Pokemon> getPokemones() {
@@ -182,6 +186,28 @@ public class Partida implements Serializable {
 
   public void setRegalosVentas(int regalosVentas) {
     this.regalosVentas = regalosVentas;
+  }
+  
+  public Pokemon[] noCasados() {
+    List<Pokemon> strings = new ArrayList<>();
+    for (Pokemon pokemon : pokemones) {
+	    if (!pokemon.isCasado() && !pokemon.isHijo() && pokemon.isCasa()) {
+	      strings.add(pokemon);
+	    }
+    }
+    Collections.shuffle(strings);
+    Pokemon[] selectedStrings = new Pokemon[2];
+    selectedStrings[0] = strings.get(0);
+    selectedStrings[1] = strings.get(1);
+    return selectedStrings;
+  }
+
+  public int getHuevos() {
+    return huevos;
+  }
+
+  public void setHuevos(int huevos) {
+    this.huevos = huevos;
   }
 
 }

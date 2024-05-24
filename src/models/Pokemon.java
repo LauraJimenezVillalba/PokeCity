@@ -16,6 +16,8 @@ public class Pokemon implements Serializable {
   private boolean casa;
   private int amistad;
   private double xp;
+  private boolean casado;
+  private boolean hijo;
 
   public Pokemon(String nombre, String image, String like, String dislike) {
     this.nombre = nombre;
@@ -26,6 +28,8 @@ public class Pokemon implements Serializable {
     this.casa = false;
     this.amistad = 0;
     this.xp = 0;
+    this.casado = false;
+    this.hijo = false;
   }
 
   public String getLike() {
@@ -90,6 +94,22 @@ public class Pokemon implements Serializable {
 
   public void setXp(double xp) {
     this.xp = xp;
+  }
+
+  public boolean isCasado() {
+    return casado;
+  }
+
+  public void setCasado(boolean casado) {
+    this.casado = casado;
+  }
+
+  public boolean isHijo() {
+    return hijo;
+  }
+
+  public void setHijo(boolean hijo) {
+    this.hijo = hijo;
   }
 
 }

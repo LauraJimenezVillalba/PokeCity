@@ -17,8 +17,10 @@ Aura
 Austin
 Bacon
 Baka
+Bakugo
 Bart
 Bastille
+Bat
 Bea
 Beast
 Beat
@@ -39,12 +41,14 @@ Brother
 Bubbles
 Buck
 Buga
+Bumble Bee
 Burn
 Buttercup
 Buzz
 Camp
 Carrey
 Cat
+Chang
 Chocolate
 Chogath
 Cicle
@@ -59,6 +63,7 @@ Colt
 Compa
 Condor
 Confuse
+Cosmo
 Cream
 Cricket
 Crime
@@ -69,6 +74,7 @@ Cruel
 Crystal
 Cupcake
 Cute
+Cyborg
 Daisy
 Dama
 Dante
@@ -78,6 +84,7 @@ Daylight
 Decade
 Dedede
 Dee Dee
+Deku
 Derek
 Diamond
 Dio
@@ -111,8 +118,10 @@ Evil
 Evo
 Ezreal
 Fade
+Falara
 Ferry
 Fionna
+Flash
 Fluffy
 Fog
 Forever
@@ -120,6 +129,7 @@ Funny
 Fuu
 Gekko
 George
+Ginna
 Glass
 Godzilla
 Goku
@@ -129,6 +139,7 @@ Grom
 Gus
 Happy
 Hate
+Hawk
 Head
 Heaven
 Homer
@@ -186,6 +197,7 @@ Laniros
 Larry
 Lawrie
 Leaf
+Lee
 Leon
 Leslie
 Levi
@@ -222,6 +234,7 @@ Mercy
 Meta
 Mex
 Mick
+Midoriya
 Mikasa
 Minus
 Miso
@@ -257,7 +270,9 @@ Okami
 Olaf
 Olimpo
 Oliver
+Omni
 One
+Onii
 Oompa
 Ophelia
 Orson
@@ -283,6 +298,7 @@ Plagg
 Plane
 Platinum
 Poli
+Poof
 Pop
 Premium
 Prince
@@ -300,6 +316,7 @@ Rain
 Rainbow
 Random
 Rasputin
+Raven
 Red
 Reina
 Remix
@@ -308,6 +325,7 @@ Rey
 Rhaast
 Rico
 Robbie
+Robin
 Room
 Ruby
 Ryan
@@ -339,10 +357,12 @@ Sol
 Song
 Soraka
 Spider
+Spidey
 Spike
 Spooky
 Squid
 Star
+Starfire
 Steak
 Stella
 Straus
@@ -355,22 +375,35 @@ Sword
 Table
 Takis
 Tara
+Tata
 Tele
 Tere
 Tesis
 Tikki
+Tini
 Tiny
 Tony
+Trek
 Trent
+Trixie
 Tsar
 Tusk
 Twenty
 Tyra
+Ulises
+Uma
+Undead
+Undine
+Uni
+Urkel
+Ursula
+Uva
 Valley
 Vegeta
 Velma
 Vergil
 Vice
+Vicky
 Victoria
 Violet
 Virus
@@ -387,12 +420,14 @@ Wendy
 White
 Wind
 Window
+Wonder
 Worker
 Worst
 Wuu
 Xander
 Xeno
 Xiby
+Yako
 Yandi
 Yasuo
 Yellow
@@ -403,3 +438,5 @@ Yuki
 Yvonne
 Zafire
 Zeta
+Zing
+Zoom
