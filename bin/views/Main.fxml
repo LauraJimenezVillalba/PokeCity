@@ -17,6 +17,143 @@
 
 <AnchorPane fx:id="fondo" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
+      <AnchorPane fx:id="pokedex" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="643.0" layoutY="33.0" prefHeight="100.0" prefWidth="293.0" text="Pokédex" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="56.0" />
+               </font>
+            </Label>
+            <Button fx:id="closeDex" contentDisplay="GRAPHIC_ONLY" layoutX="1278.0" layoutY="33.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" />
+            <ScrollPane hbarPolicy="NEVER" layoutX="172.0" layoutY="145.0" prefHeight="701.0" prefWidth="1235.0">
+               <content>
+                  <AnchorPane fx:id="pokedexPane" minHeight="0.0" minWidth="0.0" prefHeight="700.0" prefWidth="1225.0">
+                     <children>
+                        <GridPane fx:id="pokedexGrid" prefHeight="700.0" prefWidth="1225.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        </GridPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </ScrollPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="inventory" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);">
+         <children>
+            <Label fx:id="edificiosVacio" alignment="CENTER" contentDisplay="CENTER" layoutX="445.0" layoutY="340.0" prefHeight="175.0" prefWidth="700.0" text="No hay más edificios disponibles por ahora" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS" visible="false" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="56.0" />
+               </font>
+            </Label>
+            <Button fx:id="closeInventory" contentDisplay="GRAPHIC_ONLY" layoutX="1278.0" layoutY="33.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" />
+            <Button fx:id="construir" layoutX="563.0" layoutY="751.0" mnemonicParsing="false" prefHeight="121.0" prefWidth="463.0" text="Construir" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="56.0" />
+               </font>
+            </Button>
+            <ScrollPane hbarPolicy="NEVER" layoutX="260.0" layoutY="142.0" prefHeight="604.0" prefWidth="1071.0">
+              <content>
+                <AnchorPane fx:id="addEdificioPane" minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="1067.0">
+                     <children>
+                        <GridPane fx:id="addEdificio" prefHeight="600.0" prefWidth="1067.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        </GridPane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </ScrollPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="decision" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);">
+         <children>
+            <Button fx:id="closeDecision" contentDisplay="GRAPHIC_ONLY" layoutX="1278.0" layoutY="33.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" />
+            <Button fx:id="decidirAceptar" layoutX="563.0" layoutY="743.0" mnemonicParsing="false" prefHeight="121.0" prefWidth="463.0" text="Aceptar" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="56.0" />
+               </font>
+            </Button>
+            <ToggleButton fx:id="decision1" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="262.0" layoutY="246.0" mnemonicParsing="false" prefHeight="308.0" prefWidth="496.0" text="+1 Edificio de clase Medicina" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </ToggleButton>
+            <ToggleButton fx:id="decision2" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="832.0" layoutY="246.0" mnemonicParsing="false" prefHeight="308.0" prefWidth="496.0" text="+2 Futuros ciudadanos nuevos" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </ToggleButton>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="menuInicial" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);">
+         <children>
+            <Button fx:id="continuarPartida" layoutX="383.0" layoutY="504.0" mnemonicParsing="false" prefHeight="121.0" prefWidth="800.0" text="Empezar partida" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="56.0" />
+               </font>
+            </Button>
+            <ImageView fx:id="logoPrincipal" fitHeight="386.0" fitWidth="815.0" layoutX="393.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/logo.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="reiniciarPartida" layoutX="383.0" layoutY="652.0" mnemonicParsing="false" prefHeight="121.0" prefWidth="800.0" text="Reiniciar partida" textFill="WHITE" visible="false">
+               <font>
+                  <Font name="System Bold" size="56.0" />
+               </font>
+            </Button>
+            <Label fx:id="deleteText" alignment="CENTER" contentDisplay="CENTER" layoutX="451.0" layoutY="504.0" prefHeight="175.0" prefWidth="700.0" text="¿Estás seguro? Perderás todo tu progreso" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS" visible="false" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="56.0" />
+               </font>
+            </Label>
+            <Button fx:id="confirmarReinicio" contentDisplay="RIGHT" layoutX="333.0" layoutY="679.0" mnemonicParsing="false" prefHeight="121.0" prefWidth="450.0" text="Aceptar" textFill="WHITE" visible="false">
+               <font>
+                  <Font name="System Bold" size="56.0" />
+               </font>
+            </Button>
+            <Button fx:id="cancelarReinicio" contentDisplay="RIGHT" layoutX="820.0" layoutY="679.0" mnemonicParsing="false" prefHeight="121.0" prefWidth="450.0" text="Cancelar" textFill="WHITE" visible="false">
+               <font>
+                  <Font name="System Bold" size="56.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="seleccionarRegalo" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);">
+         <children>
+            <AnchorPane layoutX="343.0" layoutY="278.0" prefHeight="293.0" prefWidth="879.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);">
+               <children>
+                  <Button fx:id="seleccionarCombate" mnemonicParsing="false" prefHeight="130.0" prefWidth="302.0" text="x 1" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="56.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="seleccionarMedicina" layoutX="306.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="302.0" text="x 1" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="56.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="seleccionarServicios" layoutX="612.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="302.0" text="x 1" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="56.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="seleccionarEspectaculos" layoutY="163.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="302.0" text="x 1" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="56.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="seleccionarComida" layoutX="306.0" layoutY="163.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="302.0" text="x 1" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="56.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="seleccionarVentas" layoutX="612.0" layoutY="163.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="302.0" text="x 1" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="56.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
       <ScrollPane fx:id="scrollCuadricula" hbarPolicy="ALWAYS" hmax="1.0" hvalue="0.5" prefHeight="900.0" prefWidth="1600.0" vbarPolicy="ALWAYS" vmax="1.0" vvalue="0.5">
          <content>
             <AnchorPane fx:id="superiorGrid" prefHeight="1700.0" prefWidth="2866.67">
@@ -124,11 +261,6 @@
       </AnchorPane>
       <AnchorPane fx:id="verEdificio" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);">
          <children>
-            <Button fx:id="demoler" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" layoutX="1350.0" layoutY="683.0" mnemonicParsing="false" prefHeight="170.0" prefWidth="170.0" textFill="WHITE">
-               <font>
-                  <Font size="56.0" />
-               </font>
-            </Button>
             <Label fx:id="nombreViviendo" contentDisplay="RIGHT" layoutX="539.0" layoutY="329.0" prefHeight="83.0" prefWidth="902.0" styleClass="label-hover" text="Bulbasaur" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
                <font>
                   <Font name="System Bold" size="56.0" />
@@ -251,143 +383,6 @@
                </image>
             </ImageView>
             <HBox fx:id="boxPoke" alignment="CENTER" layoutX="99.0" layoutY="622.0" prefHeight="200.0" prefWidth="1200.0" />
-         </children>
-      </AnchorPane>
-      <AnchorPane fx:id="seleccionarRegalo" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);">
-         <children>
-            <AnchorPane layoutX="343.0" layoutY="278.0" prefHeight="293.0" prefWidth="879.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);">
-               <children>
-                  <Button fx:id="seleccionarCombate" mnemonicParsing="false" prefHeight="130.0" prefWidth="302.0" text="x 1" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="56.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="seleccionarMedicina" layoutX="306.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="302.0" text="x 1" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="56.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="seleccionarServicios" layoutX="612.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="302.0" text="x 1" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="56.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="seleccionarEspectaculos" layoutY="163.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="302.0" text="x 1" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="56.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="seleccionarComida" layoutX="306.0" layoutY="163.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="302.0" text="x 1" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="56.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="seleccionarVentas" layoutX="612.0" layoutY="163.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="302.0" text="x 1" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="56.0" />
-                     </font>
-                  </Button>
-               </children>
-            </AnchorPane>
-         </children>
-      </AnchorPane>
-      <AnchorPane fx:id="menuInicial" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);">
-         <children>
-            <Button fx:id="continuarPartida" layoutX="383.0" layoutY="504.0" mnemonicParsing="false" prefHeight="121.0" prefWidth="800.0" text="Empezar partida" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="56.0" />
-               </font>
-            </Button>
-            <ImageView fx:id="logoPrincipal" fitHeight="386.0" fitWidth="815.0" layoutX="393.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../img/logo.png" />
-               </image>
-            </ImageView>
-            <Button fx:id="reiniciarPartida" layoutX="383.0" layoutY="652.0" mnemonicParsing="false" prefHeight="121.0" prefWidth="800.0" text="Reiniciar partida" textFill="WHITE" visible="false">
-               <font>
-                  <Font name="System Bold" size="56.0" />
-               </font>
-            </Button>
-            <Label fx:id="deleteText" alignment="CENTER" contentDisplay="CENTER" layoutX="451.0" layoutY="504.0" prefHeight="175.0" prefWidth="700.0" text="¿Estás seguro? Perderás todo tu progreso" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS" visible="false" wrapText="true">
-               <font>
-                  <Font name="System Bold" size="56.0" />
-               </font>
-            </Label>
-            <Button fx:id="confirmarReinicio" contentDisplay="RIGHT" layoutX="333.0" layoutY="679.0" mnemonicParsing="false" prefHeight="121.0" prefWidth="450.0" text="Aceptar" textFill="WHITE" visible="false">
-               <font>
-                  <Font name="System Bold" size="56.0" />
-               </font>
-            </Button>
-            <Button fx:id="cancelarReinicio" contentDisplay="RIGHT" layoutX="820.0" layoutY="679.0" mnemonicParsing="false" prefHeight="121.0" prefWidth="450.0" text="Cancelar" textFill="WHITE" visible="false">
-               <font>
-                  <Font name="System Bold" size="56.0" />
-               </font>
-            </Button>
-         </children>
-      </AnchorPane>
-      <AnchorPane fx:id="decision" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);">
-         <children>
-            <Button fx:id="closeDecision" contentDisplay="GRAPHIC_ONLY" layoutX="1278.0" layoutY="33.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" />
-            <Button fx:id="decidirAceptar" layoutX="563.0" layoutY="743.0" mnemonicParsing="false" prefHeight="121.0" prefWidth="463.0" text="Aceptar" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="56.0" />
-               </font>
-            </Button>
-            <ToggleButton fx:id="decision1" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="262.0" layoutY="246.0" mnemonicParsing="false" prefHeight="308.0" prefWidth="496.0" text="+1 Edificio de clase Medicina" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-               <font>
-                  <Font name="System Bold" size="36.0" />
-               </font>
-            </ToggleButton>
-            <ToggleButton fx:id="decision2" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="832.0" layoutY="246.0" mnemonicParsing="false" prefHeight="308.0" prefWidth="496.0" text="+2 Futuros ciudadanos nuevos" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-               <font>
-                  <Font name="System Bold" size="36.0" />
-               </font>
-            </ToggleButton>
-         </children>
-      </AnchorPane>
-      <AnchorPane fx:id="inventory" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);">
-         <children>
-            <Label fx:id="edificiosVacio" alignment="CENTER" contentDisplay="CENTER" layoutX="445.0" layoutY="340.0" prefHeight="175.0" prefWidth="700.0" text="No hay más edificios disponibles por ahora" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS" visible="false" wrapText="true">
-               <font>
-                  <Font name="System Bold" size="56.0" />
-               </font>
-            </Label>
-            <Button fx:id="closeInventory" contentDisplay="GRAPHIC_ONLY" layoutX="1278.0" layoutY="33.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" />
-            <Button fx:id="construir" layoutX="563.0" layoutY="751.0" mnemonicParsing="false" prefHeight="121.0" prefWidth="463.0" text="Construir" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="56.0" />
-               </font>
-            </Button>
-            <ScrollPane hbarPolicy="NEVER" layoutX="260.0" layoutY="142.0" prefHeight="604.0" prefWidth="1071.0">
-              <content>
-                <AnchorPane fx:id="addEdificioPane" minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="1067.0">
-                     <children>
-                        <GridPane fx:id="addEdificio" prefHeight="600.0" prefWidth="1067.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                        </GridPane>
-                     </children>
-                  </AnchorPane>
-              </content>
-            </ScrollPane>
-         </children>
-      </AnchorPane>
-      <AnchorPane fx:id="pokedex" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);">
-         <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="643.0" layoutY="33.0" prefHeight="100.0" prefWidth="293.0" text="Pokédex" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
-               <font>
-                  <Font name="System Bold" size="56.0" />
-               </font>
-            </Label>
-            <Button fx:id="closeDex" contentDisplay="GRAPHIC_ONLY" layoutX="1278.0" layoutY="33.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" />
-            <ScrollPane hbarPolicy="NEVER" layoutX="172.0" layoutY="145.0" prefHeight="701.0" prefWidth="1235.0">
-               <content>
-                  <AnchorPane fx:id="pokedexPane" minHeight="0.0" minWidth="0.0" prefHeight="700.0" prefWidth="1225.0">
-                     <children>
-                        <GridPane fx:id="pokedexGrid" prefHeight="700.0" prefWidth="1225.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                        </GridPane>
-                     </children>
-                  </AnchorPane>
-               </content>
-            </ScrollPane>
          </children>
       </AnchorPane>
    </children>

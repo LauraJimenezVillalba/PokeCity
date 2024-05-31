@@ -307,9 +307,6 @@ public class MainController {
   private Button comprarRegaloEdificio;
 
   @FXML
-  private Button demoler;
-
-  @FXML
   private HBox boxPoke;
 
   private final int size = 10;
@@ -575,7 +572,6 @@ public class MainController {
     regaloText.setOnMouseClicked(event -> openRegalos());
     regaloAleatorio.setOnAction(event -> addRegaloRandom());
     seleccionarRegalo.setOnMouseClicked(event -> closeModalRegalo());
-    demoler.setOnAction(event -> demoler(partida.getSelectedBuilding()));
     openPrincipal();
 
     likeIcon.setImage(new Image(getClass().getResourceAsStream("/img/button/feliz.png")));
@@ -846,12 +842,6 @@ public class MainController {
     imageViewMejorar.setFitHeight(iconSizePeque);
     imageViewMejorar.setPreserveRatio(true);
     mejorarEdificio.setGraphic(imageViewMejorar);
-
-    Image imageDemoler = new Image(getClass().getResourceAsStream("/img/button/demoler.png"));
-    ImageView imageViewDemoler = new ImageView(imageDemoler);
-    imageViewDemoler.setFitHeight(iconSizeGrande);
-    imageViewDemoler.setPreserveRatio(true);
-    demoler.setGraphic(imageViewDemoler);
 
     Image imageHuevo = new Image(getClass().getResourceAsStream("/img/button/huevo.png"));
     ImageView imageViewHuevo = new ImageView(imageHuevo);
@@ -1526,64 +1516,6 @@ public class MainController {
     });
 
     inventory.toFront();
-  }
-
-  private void demoler(Building edificio) {
-    int row = edificio.getRow();
-    int col = edificio.getCol();
-    if (!edificio.getViviendo().isEmpty()) {
-      for (Pokemon pokemon : edificio.getViviendo()) {
-        edificio.removeViviendo(pokemon);
-        pokemon.setCasa(false);
-        for (Node node : superiorGrid.getChildren()) {
-          if (node instanceof ImageView) {
-            ImageView imageViewDeshaucio = (ImageView) node;
-            if (pokemon.equals(imageViewDeshaucio.getUserData())) {
-              superiorGrid.getChildren().remove(imageViewDeshaucio);
-              break;
-            }
-          }
-        }
-      }
-    }
-    if (edificio.getTrabajador() != null) {
-      Pokemon pokemon = edificio.getTrabajador();
-      edificio.setTrabajador(null);
-      pokemon.setTrabaja(false);
-    }
-    if (edificio.getTrabajador2() != null) {
-      Pokemon pokemon = edificio.getTrabajador2();
-      edificio.setTrabajador2(null);
-      pokemon.setTrabaja(false);
-    }
-    if (edificio.getTrabajador3() != null) {
-      Pokemon pokemon = edificio.getTrabajador3();
-      edificio.setTrabajador3(null);
-      pokemon.setTrabaja(false);
-    }
-    if (edificio.getTrabajador4() != null) {
-      Pokemon pokemon = edificio.getTrabajador4();
-      edificio.setTrabajador4(null);
-      pokemon.setTrabaja(false);
-    }
-    partida.getBuildings().remove(edificio);
-    borrarBotonEdificio(row, col);
-    Button button = new Button("");
-    button.setPrefWidth(anchoCuadricula);
-    button.setPrefHeight(altoCuadricula - 2);
-    button.setOnAction(event -> openInventory(event));
-    GridPane.setHalignment(button, HPos.CENTER);
-    Image image = new Image(getClass().getResourceAsStream("/img/button/sale.png"));
-    ImageView imageView = new ImageView(image);
-    imageView.setFitHeight(iconSize);
-    imageView.setPreserveRatio(true);
-    button.setOnMouseEntered(event -> button.setGraphic(imageView));
-    button.setOnMouseExited(event -> button.setGraphic(null));
-    button.getProperties().put("row", row);
-    button.getProperties().put("col", col);
-    cuadricula.add(button, col, row);
-    closeEdificio();
-    setPokeNumber();
   }
 
   /**
@@ -3489,15 +3421,6 @@ public class MainController {
       mejorarEdificio.setText("Mejorar edificio (200k)");
     } else if (edificio.getNumMejoras() == maxMejoras) {
       mejorarEdificio.setText("Máx. Mejoras");
-    }
-  }
-
-  private void borrarBotonEdificio(int row, int col) {
-    for (var node : cuadricula.getChildren()) {
-      if (GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == col) {
-        cuadricula.getChildren().remove(node);
-        break;
-      }
     }
   }
 
