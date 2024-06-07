@@ -1,4 +1,4 @@
-module SuperAutoMons {
+module PokeCity {
   requires javafx.controls;
   requires javafx.fxml;
   requires javafx.graphics;
@@ -6,3 +6,4 @@ module SuperAutoMons {
 
   opens application to javafx.graphics, javafx.fxml;
 }
+
