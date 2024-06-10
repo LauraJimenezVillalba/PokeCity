@@ -1,1 +1,0 @@
-java --module-path "C:\JavaFX\lib" --add-modules javafx.controls,javafx.fxml -jar main.jar
